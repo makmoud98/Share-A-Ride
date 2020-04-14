@@ -1,0 +1,24 @@
+{
+  "name": "share-a-ride",
+  "version": "1.0.0",
+  "description": "\"Share A Ride\" - A Ride Sharing Application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makmoud98/Share-A-Ride.git"
+  },
+  "author": "Michael Elnajami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makmoud98/Share-A-Ride/issues"
+  },
+  "homepage": "https://github.com/makmoud98/Share-A-Ride#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express.js": "^1.0.0",
+    "mongoose": "^5.9.9"
+  }
+}
