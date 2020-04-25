@@ -1,47 +1,86 @@
 var express = require('express')
 const { check } = require('express-validator')
-const { accountValidators, checkValidationError } = require('../utils/validation_helper')
+const { createValidationError } = require('../utils/validation_helper')
 const { accountManager } = require('../account_manager')
+const { Account } = require('../account')
 
 var router = express.Router()
 
-router.post('/',
-    accountValidators,
-    check('is_active').optional().custom((val) => {return val == false}),
-    checkValidationError,
-    (req, res) => {
-        // all data is valid, so now create the user
-        // req.body is basically the body of the post request
-        // it will have all the validated attributes
-        var account = accountManager.add(req.body)
-        return res.status(201).json({aid: account.aid})
-    })
+router.get('/', (req, res) => {
+    var accounts = accountManager.getAll()
+    var output = []
 
-router.put('/:aid',
-    accountValidators,
-    check('is_active').custom((val) => {return val == false}),
-    checkValidationError,
-    (req, res) => {
-        var account = accountManager.update(req.params.aid, req.body)
-        if(account) return res.status(204).send()
-        else return res.status(404).send()
-    })
+    for (var i = 0; i < accounts.length; i++) {
+        account = accounts[i]
+        output.push({
+            aid: account.aid,
+            name: account.getFullName(),
+            date_created: account.date_created,
+            is_active: account.is_active
+        })
+    }
 
-router.put('/:aid/status',
-    accountValidators,
-    check('is_active').custom((val) => {return val == true}),
-    checkValidationError,
-    (req, res) => {
+    return res.status(200).json(output)
+})
+
+router.post('/', (req, res) => {
+    if (req.body.is_active == true) {
+        return createValidationError(req, res, "Invalid value for is_active")
+    }
+    try {
+        var account = new Account(
+            req.body.first_name, 
+            req.body.last_name, 
+            req.body.phone, 
+            req.body.picture, 
+            req.body.is_active
+        )
+        accountManager.add(account)
+    } catch (error) {
+        return createValidationError(req, res, error)
+    }
+    return res.status(201).json({aid: account.aid})
+})
+
+router.put('/:aid', (req, res) => {
+    try {
         var account = accountManager.get(req.params.aid)
-        if(account) return res.status(204).send()
-        else return res.status(404).send()
-    })
+        console.log(account)
+        account.update(
+            req.body.first_name, 
+            req.body.last_name, 
+            req.body.phone, 
+            req.body.picture, 
+            req.body.is_active
+        )
+        accountManager.update(req.params.aid, account)
+    } catch (error) {
+        console.log(error)
+        return createValidationError(req, res, error)
+    }
+    return res.status(204).send()
+})
 
-router.delete('/:aid',
-    (req, res) => {
-        var success = accountManager.delete(req.params.aid)
-        if (success) return res.status(204).send()
-        else return res.status(404).send()
-    })
+router.put('/:aid/status', (req, res) => {
+    if (req.body.is_active != true) {
+        return createValidationError(req, res, "Invalid value for is_active")
+    }
+    try {
+        var account = accountManager.get(req.params.aid)
+        console.log(account)
+        account.update(
+            req.body.first_name, 
+            req.body.last_name, 
+            req.body.phone, 
+            req.body.picture, 
+            req.body.is_active
+        )
+        accountManager.update(req.params.aid, account)
+    } catch (error) {
+        console.log(error)
+        return createValidationError(req, res, error)
+    }
+    return res.status(204).send()
+})
 
 module.exports = router
