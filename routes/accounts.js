@@ -122,26 +122,23 @@ router.get('/:aid/:rider_type', (req, res) => {
         var ratings = ratingManager(account.aid, req.params.rider_type)
 
         var detail = []
-        var average_rating = 0
         for (var i = 0; i < ratings.length; i++) {
             rating = ratings[i]
             detail.push({
-                rid: rating.aid,
+                rid: rating.rid,
                 sent_by_id: rating.sent_by_id,
                 first_name: accountManager.get(rating.sent_by_id).getFullName(),
                 date: rating.date_created,
                 rating: rating.rating,
                 comment: rating.comment
             })
-            average_rating += rating.rating
         }
-        average_rating /= detail.length
 
         return res.status(200).json({
             aid: account.aid,
             first_name: account.first_name,
             rides: detail.length,
-            average_rating: average_rating,
+            average_rating: ratingManager.getAverageRating(ratings),
             detail: detail
         })
     } catch (error) {

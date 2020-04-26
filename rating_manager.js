@@ -16,6 +16,15 @@ class RatingManager {
         })
         return ratings
     }
+
+    static getAverageRating(ratings) {
+        var count = ratings.length
+        var total = 0
+        ratings.map((rating)=>{
+            total += rating.rating
+        })
+        return total/count
+    }
 }
 
 module.exports.ratingManager = new RatingManager()

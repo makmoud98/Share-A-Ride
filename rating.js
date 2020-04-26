@@ -27,14 +27,11 @@ class Rating {
     }
 
     setRide(ride) {
-        this.ride = ride
-        this.setRiderType()
+        this.rid = ride.rid
+        this.setRiderType(ride)
     }
 
-    setRiderType() {
-        // will throw an error if the id doesnt exists
-        var ride = this.ride
-
+    setRiderType(ride) {
         // is rating from the driver?
         if(ride.driver_aid == this.sent_by_id) {
             this.rider_type = 'driver'

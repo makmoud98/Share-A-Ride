@@ -1,12 +1,18 @@
+const { Validators } = require("./validators")
+
 class Ride {
-    constructor(aid, location_info, date_time, car_info, max_passengers, ammount_per_passenger, conditions) {
+    constructor(aid, location_info, date_time, car_info, max_passengers, amount_per_passenger, conditions) {
         this.passengers = []
         this.setAid(aid)
         this.setLocation(location_info)
         this.setDateTime(date_time)
         this.setCarInfo(car_info)
-        this.setAmountPerPassenger(ammount_per_passenger)
+        this.setAmountPerPassenger(amount_per_passenger)
         this.setConditions(conditions)
+    }
+
+    setRid(rid) {
+        this.rid = rid
     }
 
     setAid(aid) {
@@ -34,7 +40,7 @@ class Ride {
         ) {
             throw "Invalid value for date_time"
         }
-
+        this.date_time = date_time
     }
 
     setCarInfo(car_info) {
@@ -54,17 +60,22 @@ class Ride {
         if (max_passengers == undefined) {
             throw "Invalid value for max_passengers"
         }
+        this.max_passengers = max_passengers
     }
 
-    setAmmountPerPassenger(ammount_per_passenger) {
-        if (ammount_per_passenger == undefined) {
-            throw "Invalid value for ammount_per_passenger"
+    setAmountPerPassenger(amount_per_passenger) {
+        if (amount_per_passenger == undefined) {
+            throw "Invalid value for amount_per_passenger"
         }
+        this.amount_per_passenger = amount_per_passenger
     }
 
     setConditions(conditions) {
         if (conditions == undefined) {
             throw "Invalid value for conditions"
         }
+        this.conditions = conditions
     }
 }
+
+module.exports.Ride = Ride

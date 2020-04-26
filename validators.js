@@ -8,6 +8,14 @@ class Validators {
     static isPhoneNumber(num) {
         return new RegExp("\\d{3}-\\d{3}-\\d{4}").test(num)
     }
+
+    static isDate(date) {
+        return true
+    }
+
+    static isTime(time) {
+        return true
+    }
 }
 
 module.exports.Validators = Validators
