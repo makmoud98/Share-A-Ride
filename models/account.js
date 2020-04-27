@@ -1,4 +1,4 @@
-const { Validators } = require("./validators")
+const { Validators } = require("../utils/validators")
 
 class Account {
     constructor(first_name, last_name, phone, picture, is_active) {

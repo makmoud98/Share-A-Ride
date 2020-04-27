@@ -17,15 +17,6 @@ class AccountManager {
         }
         throw "aid doesnt exist"
     }
-    update(aid, account) {
-        for(var i = 0; i < this.accounts.length; i++) {
-            if(this.accounts[i].aid == aid) {
-                this.accounts[i] = account
-                return
-            }
-        }
-        throw "aid doesnt exist"
-    }
 }
 
 module.exports.accountManager = new AccountManager()

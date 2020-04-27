@@ -1,12 +1,17 @@
-const { Validators } = require("./validators")
+const { Validators } = require("../utils/validators")
 
 class Ride {
     constructor(aid, location_info, date_time, car_info, max_passengers, amount_per_passenger, conditions) {
         this.passengers = []
+        this.update(aid, location_info, date_time, car_info, max_passengers, amount_per_passenger, conditions)
+    }
+
+    update(aid, location_info, date_time, car_info, max_passengers, amount_per_passenger, conditions) {
         this.setAid(aid)
         this.setLocation(location_info)
         this.setDateTime(date_time)
         this.setCarInfo(car_info)
+        this.setMaxPassengers(max_passengers)
         this.setAmountPerPassenger(amount_per_passenger)
         this.setConditions(conditions)
     }
@@ -54,6 +59,7 @@ class Ride {
         ) {
             throw "Invalid value for car_info"
         }
+        this.car_info = car_info
     }
 
     setMaxPassengers(max_passengers) {

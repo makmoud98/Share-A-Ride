@@ -1,16 +1,18 @@
 class Rating {
-    constuctor(ride, aid, sent_by_id, rating, comment) {
+    constructor(ride, aid, sent_by_id, rating, comment, date) {
         this.setRide(ride)
         this.setAid(aid)
         this.setSentAid(sent_by_id)
         this.setRating(rating)
         this.setComment(comment)
-        this.setDateCreated()
+        this.setDateCreated(date)
     }
 
-    setDateCreated() {
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    setSid(sid) {
+        this.sid = sid
+    }
+
+    setDateCreated(date) {
         this.date_created = date;
     }
 
@@ -66,3 +68,5 @@ class Rating {
         this.comment = comment
     }
 }
+
+module.exports.Rating = Rating

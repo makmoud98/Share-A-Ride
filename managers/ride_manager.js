@@ -1,4 +1,4 @@
-const { Validators } = require("./validators")
+const { Validators } = require("../utils/validators")
 
 class RideManager {
     constructor() {
@@ -8,15 +8,15 @@ class RideManager {
         var matches = this.rides.filter((ride)=>{
             if(
                 (
-                    from == undefined ||
-                    ride.location_info.from_city == from
+                    !from ||
+                    ride.location_info.from_city.toLowerCase() == from.toLowerCase()
                 ) &&
                 (
-                    to == undefined ||
-                    ride.location_info.to_city == to
+                    !to ||
+                    ride.location_info.to_city.toLowerCase() == to.toLowerCase()
                 ) &&
                 (
-                    date == undefined ||
+                    !date ||
                     ride.date_time.date == date
                 )
             ) {
@@ -51,6 +51,13 @@ class RideManager {
             }
         }
         throw "rid doesnt exist"
+    }
+    delete(rid) {
+        for(var i = 0; i < this.rides.length; i++) {
+            if(this.rides[i].rid == rid) {
+                this.rides.splice(i, 1)
+            }
+        }
     }
 }
 

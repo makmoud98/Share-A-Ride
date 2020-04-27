@@ -9,15 +9,21 @@ class RatingManager {
     }
 
     getRatings(aid, type) {
-        if (type != undefined || type != 'driver' || type != 'rider')
+        if (type && type != 'driver' && type != 'rider')
             throw "Invalid rating type. expected 'driver' or 'rider'"
         var ratings = this.ratings.filter((rating) => {
-            if (rating.aid == aid && rating.rider_type == type) return true
+            if (
+                rating.aid == aid && 
+                (
+                    !type ||
+                    rating.rating_type == type
+                )
+            ) return true
         })
         return ratings
     }
 
-    static getAverageRating(ratings) {
+    getAverageRating(ratings) {
         var count = ratings.length
         var total = 0
         ratings.map((rating)=>{
