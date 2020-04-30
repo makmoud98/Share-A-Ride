@@ -43,15 +43,6 @@ class RideManager {
         }
         throw "rid doesnt exist"
     }
-    update(rid, ride) {
-        for(var i = 0; i < this.rides.length; i++) {
-            if(this.rides[i].rid == rid) {
-                this.rides[i] = ride
-                return
-            }
-        }
-        throw "rid doesnt exist"
-    }
     delete(rid) {
         for(var i = 0; i < this.rides.length; i++) {
             if(this.rides[i].rid == rid) {
@@ -62,3 +53,4 @@ class RideManager {
 }
 
 module.exports.rideManager = new RideManager()
+module.exports.RideManager = RideManager;

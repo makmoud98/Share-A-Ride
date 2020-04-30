@@ -34,3 +34,4 @@ class RatingManager {
 }
 
 module.exports.ratingManager = new RatingManager()
+module.exports.RatingManager = RatingManager;

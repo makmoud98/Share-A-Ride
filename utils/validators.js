@@ -23,8 +23,7 @@ class Validators {
             title: 'Your request data didn\'t pass validation',
             detail: message,
             status: 400,
-            instance: Validators.getInstanceUrl(req) // this url includes /sar unlike the examples,
-            // but i dont think it is really a problem
+            instance: Validators.getInstanceUrl(req)
         })
     }
 

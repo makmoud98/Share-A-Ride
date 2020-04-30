@@ -2,9 +2,6 @@ class AccountManager {
     constructor() {
         this.accounts = []
     }
-    getAll() {
-        return this.accounts
-    }
     add(account) {
         account.setAid(this.accounts.length)
         this.accounts.push(account)
@@ -19,4 +16,5 @@ class AccountManager {
     }
 }
 
+module.exports.AccountManager = AccountManager
 module.exports.accountManager = new AccountManager()

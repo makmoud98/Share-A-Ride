@@ -18,7 +18,7 @@ var router = express.Router()
 
 router.get('/', (req, res) => {
     var keyword = req.query.key
-    var accounts = accountManager.getAll().filter((account)=>{
+    var accounts = accountManager.accounts.filter((account)=>{
         if(
             account.first_name.search(keyword) >= 0 ||
             account.last_name.search(keyword) >= 0  ||
@@ -78,10 +78,10 @@ router.put('/:aid', (req, res) => {
 })
 
 router.put('/:aid/status', (req, res) => {
-    if (req.body.is_active != true) {
-        return Validators.createValidationError(req, res, "Invalid value for is_active")
-    }
+    
     try {
+        if (req.body.is_active != true) throw "Invalid value for is_active"
+            
         var account = accountManager.get(req.params.aid)
         account.update(
             req.body.first_name, 
@@ -113,7 +113,7 @@ router.post('/:aid/ratings', (req, res) => {
                 rating_type = 'driver'
         }
         var rating = new Rating(
-            ride,
+            ride.rid,
             account.aid,
             rater.aid,
             req.body.rating,

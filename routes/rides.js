@@ -53,6 +53,11 @@ router.post('/', (req, res) => {
 router.get('/:rid', (req, res) => {
     try {
         var ride = rideManager.get(req.params.rid)
+
+    } catch (error) {
+        return res.status(404).send(error)
+    }
+    try {
         var account = accountManager.get(ride.aid)
         var rides = rideManager.getByAid(account.aid).filter((ride)=>{
             var requests = joinRequestManager.getByRid(ride.rid)
@@ -62,11 +67,7 @@ router.get('/:rid', (req, res) => {
             return false
         })
         var ratings = ratingManager.getRatings(account.aid, 'driver')
-    } catch (error) {
-        console.log(error)
-        return res.status(404).send(error)
-    }
-    try {
+
         var comment_detail = []
         for (var i = 0; i < ratings.length; i++) {
             rating = ratings[i]
@@ -134,58 +135,15 @@ router.delete('/:rid', (req, res) => {
     return res.status(204).send()
 })
 
-router.get('/:rid', (req, res) => {
-    try {
-        var ride = rideManager.get(req.params.rid)
-        var account = accountManager.get(ride.aid)
-        var rides = rideManager.getByAid(account.aid).filter((ride)=>{
-            return ride.ride_confirmed
-        })
-        var ratings = ratingManager.getRatings(account.aid, 'driver')
-    } catch (error) {
-        return res.status(404).send(error)
-    }
-    try {
-        var comment_detail = []
-        for (var i = 0; i < ratings.length; i++) {
-            rating = ratings[i]
-            comment_detail.push({
-                rid: rating.rid,
-                date: rating.date_created,
-                rating: rating.rating,
-                comment: rating.comment
-            })
-        }
-
-        res.status(200).json({
-            rid: ride.rid,
-            max_passengers: ride.max_passengers,
-            amount_per_passenger: ride.amount_per_passenger,
-            conditions: ride.conditions,
-            location_info: ride.location_info,
-            date_time: ride.date_time,
-            car_info: ride.car_info,
-            driver: account.first_name,
-            driver_picture: account.picture,
-            rides: rides.length,
-            ratings: ratings.length,
-            average_rating: ratingManager.getAverageRating(ratings),
-            comments_about_driver: comment_detail
-        })
-    } catch (error) {
-        console.log(error)
-        return Validators.createValidationError(req, res, error)
-    }
-})
-
 router.post('/:rid/join_requests', (req, res) => {
     try {
         var ride = rideManager.get(req.params.rid)
-        var account = accountManager.get(req.body.aid)
     } catch (error) {
         return res.status(404).send(error)
     }
     try {
+        var account = accountManager.get(req.body.aid)
+        
         if (req.body.ride_confirmed == true) {
             throw "Invalid value for ride_confirmed"
         }

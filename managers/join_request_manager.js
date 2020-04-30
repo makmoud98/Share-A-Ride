@@ -31,3 +31,4 @@ class JoinRequestManager {
 }
 
 module.exports.joinRequestManager = new JoinRequestManager()
+module.exports.JoinRequestManager = JoinRequestManager

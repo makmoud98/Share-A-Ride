@@ -4,7 +4,8 @@
   "description": "\"Share A Ride\" - A Ride Sharing Application",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/nyc ./node_modules/mocha/bin/mocha",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,17 @@
   "homepage": "https://github.com/makmoud98/Share-A-Ride#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "detect-mocha": "^0.1.0",
     "dotenv": "^8.2.0",
     "express-validator": "^6.4.0",
     "express.js": "^1.0.0",
+    "mocha": "^7.1.2",
     "mongoose": "^5.9.9"
+  },
+  "devDependencies": {
+    "nyc": "^15.0.1",
+    "supertest": "^4.0.2"
   }
 }

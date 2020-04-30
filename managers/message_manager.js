@@ -12,6 +12,7 @@ class MessageManager {
         var matches = this.messages.filter((message)=>{
             return message.mid == mid
         })
+        if (matches.length == 0) throw "Message with given mid not found"
         return matches[0]
     }
 
@@ -24,3 +25,4 @@ class MessageManager {
 }
 
 module.exports.messageManager = new MessageManager()
+module.exports.MessageManager = MessageManager
